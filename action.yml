@@ -40,7 +40,7 @@ runs:
           leadTime=$(echo "$row" | cut -d, -f9)
           timeToFirstReiew=$(echo "$row" | cut -d, -f6)
           reviewTimeTotal=$(echo "$row" | cut -d, -f10)
-          data="$data\n| #$num | $add | $del | $changed | $leadTime | $timeToFirstReiew | $reviewTimeTotal |"
+          data="$data\n| $num | $add | $del | $changed | $leadTime | $timeToFirstReiew | $reviewTimeTotal |"
         done
         data="${data//$'\n'/'%0A'}"
         echo "::set-output name=data::$data"
@@ -49,6 +49,6 @@ runs:
       shell: bash
       run: |
         body="${{ steps.markdown.outputs.data }}"
-        gh issue create -R ${{ github.repository }} --body "${body}" --title "Yesterday(${{ steps.rawdata.outputs.mdate }}) Merged PRs"
+        gh issue create -R ${{ github.repository }} --body "$(echo -e $body)" --title "Yesterday(${{ steps.rawdata.outputs.mdate }}) Merged PRs"
       env:
         GH_TOKEN: ${{ github.token }}
