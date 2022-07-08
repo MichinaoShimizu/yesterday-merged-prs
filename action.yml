@@ -54,7 +54,7 @@ runs:
     - name: Create report
       shell: bash
       run: |
-        body=$(echo ${{ steps.markdown.outputs.data }})
+        body="${{ steps.markdown.outputs.data }}"
         gh issue create -R ${{ github.repository }} --body "${body//$'\n'/'%0A'}" --title "Yesterday(${{ steps.rawdata.outputs.mdate }}) Merged PRs"
       env:
         GH_TOKEN: ${{ github.token }}
