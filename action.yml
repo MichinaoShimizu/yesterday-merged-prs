@@ -42,16 +42,15 @@ runs:
           timeToFirstReiew="$(echo $row | cut -d, -f6)"
           reviewTimeTotal="$(echo $row | cut -d, -f10)"
           rows="$rows\n| $num | $add | $del | $changed | $leadTime | $timeToFirstReiew | $reviewTimeTotal |"
-          echo "$rows"
         done
-        data=$header$rows
-        data="${data//$'\n'/'%0A'}"
-        echo "::set-output name=data::$data"
+        table="$header$rows"
+        table="${table//$'\n'/'%0A'}"
+        echo "::set-output name=table::$table"
 
     - name: Create report
       shell: bash
       run: |
-        body="${{ steps.markdown.outputs.data }}"
+        body="${{ steps.markdown.outputs.table }}"
         gh issue create -R ${{ github.repository }} --body "$(echo -e $body)" --title "Yesterday(${{ steps.rawdata.outputs.mdate }}) Merged PRs"
       env:
         GH_TOKEN: ${{ github.token }}
