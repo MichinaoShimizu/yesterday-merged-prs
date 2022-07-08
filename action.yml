@@ -2,9 +2,6 @@ name: Yesterday Mereged PRs
 decription: Yesterday Mereged PRs to ISSUE.
 
 outputs:
-  markdown:
-    description: Summary(markdown)
-    value: ${{ steps.markdown.outputs.data }}
   csv:
     description: Summary(csv)
     value: ${{ steps.rawdata.outputs.data }}
@@ -22,7 +19,8 @@ runs:
         repos=$(echo ${{ github.repository }} | awk -F '/' '{print $2}')
         gh extension install hectcastro/gh-metrics
         data="$(gh metrics --owner "$owner" --repo "$repos" --start "$mdate" --end "$mdate" --only-weekdays --csv)"
-        echo "::set-output name=data::${data//$'\n'\\n}"
+        data="${data//$'\n'\\n}"
+        echo "::set-output name=data::$data"
         echo "::set-output name=mdate::$mdate"
       env:
         TZ: Asia/Tokyo
@@ -32,6 +30,8 @@ runs:
       id: markdown
       shell: bash
       run: |
+        echo ${{ steps.rawdata.outputs.data }}
+
         head=<<EOS
         | PR | Additions | Deletions | Changed Files | Lead Time | Time To 1st Review | Total Review Time |
         | -- | --------- | --------- | ------------- | --------- | ------------------ | ----------------- |
