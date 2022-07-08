@@ -61,7 +61,7 @@ runs:
       run:
         body=$(echo ${{ steps.markdown.outputs.data }})
         body="${body//$'\n'/'%0A'}"
-        title="Yesterday(${{ steps.rawdata.outputs.mdate }} Merged PRs)"
-        gh issue create -R "${{ github.repository }}" --body "$body" -t "$title" -l "${{ inputs.label }}"
+        title="Yesterday(${{ steps.rawdata.outputs.mdate }}) Merged PRs"
+        gh issue create -R ${{ github.repository }} --body $body --title $title -l "${{ inputs.label }}"
       env:
         GH_TOKEN: ${{ github.token }}
