@@ -29,8 +29,8 @@ runs:
       id: markdown
       shell: bash
       run: |
-        table="| PR | LeadTime | TimeTo1stReview | TotalReviewTime | Additions | Deletions  | "
-        table="$table\\n| -- | --------- | ------------- | --------- | ------------------ | ----------------- |"
+        table="| PR | LeadTime | TimeTo1stReview | ReviewTimeTotal | Additions | Deletions | ChangedFiles | "
+        table="$table\\n| -- | --------- | ------------- | --------- | ------------------ | ------------ | -- |"
         IFS=$'\n';
         for row in $(echo "${{ steps.rawdata.outputs.data }}" | tail -n +2)
         do
@@ -41,7 +41,7 @@ runs:
           leadTime="$(echo $row | cut -d, -f9)"
           timeToFirstReiew="$(echo $row | cut -d, -f6)"
           reviewTimeTotal="$(echo $row | cut -d, -f10)"
-          table="$table\\n| #$num | $leadTime | $timeToFirstReiew | $reviewTimeTotal | $add line | $del line | "
+          table="$table\\n| __#$num__ | __$leadTime__ | __$timeToFirstReiew__ | __$reviewTimeTotal__ | __$add__ line | __$del__ line | __$changed__ file |"
         done
         echo "$table"
         table="${table//'%'/'%25'}"
@@ -53,6 +53,6 @@ runs:
       shell: bash
       run: |
         body="${{ steps.markdown.outputs.table }}"
-        gh issue create -R ${{ github.repository }} --body "$(echo -e $body)" --title "Yesterday(${{ steps.rawdata.outputs.mdate }}) Merged PRs"
+        gh issue create -R ${{ github.repository }} --body "$(echo -e $body)" --title "Merged At ${{ steps.rawdata.outputs.mdate }} PRs"
       env:
         GH_TOKEN: ${{ github.token }}
