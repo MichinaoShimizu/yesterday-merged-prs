@@ -41,9 +41,8 @@ runs:
           timeToFirstReiew="$(echo $row | cut -d, -f6)"
           reviewTimeTotal="$(echo $row | cut -d, -f10)"
           table="$table\\n| $num | $add | $del | $changed | $leadTime | $timeToFirstReiew | $reviewTimeTotal |"
-          echo "$table"
         done
-        # table="${table//$'\n'/\\n}"
+        echo "$table"
         table="${table//'%'/'%25'}"
         table="${table//$'\n'/'%0A'}"
         table="${table//$'\r'/'%0D'}"
