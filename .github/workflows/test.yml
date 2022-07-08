@@ -13,6 +13,6 @@ jobs:
     steps:
       - name: Create Yesterday Merged PRs ISSUE
         # uses: MichinaoShimizu/yesterday-merged-prs@v1.0.1
-        uses: ./actions.yml
+        uses: ./action.yml
         with:
           label: hogehoge
