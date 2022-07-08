@@ -1,10 +1,5 @@
 name: Yesterday Mereged PRs
 decription: Yesterday Mereged PRs to ISSUE.
-inputs:
-  label:
-    description: Label attached to ISSUE
-    required: false
-    default: report
 
 outputs:
   markdown:
@@ -62,6 +57,6 @@ runs:
         body=$(echo ${{ steps.markdown.outputs.data }})
         body="${body//$'\n'/'%0A'}"
         title="Yesterday(${{ steps.rawdata.outputs.mdate }}) Merged PRs"
-        gh issue create -R ${{ github.repository }} --body "$body" --title "$title" -l "${{ inputs.label }}"
+        gh issue create -R ${{ github.repository }} --body "$body" --title "$title"
       env:
         GH_TOKEN: ${{ github.token }}
