@@ -32,7 +32,9 @@ runs:
       run: |
         table="| PR | Additions | Deletions | Changed Files | Lead Time | Time To 1st Review | Total Review Time |"
         table="$table\\n| -- | --------- | --------- | ------------- | --------- | ------------------ | ----------------- |"
-        echo "${{ steps.rawdata.outputs.data }}" | tail -n +2 | while read row; do
+        IFS=$'\n';
+        for row in $(echo "${{ steps.rawdata.outputs.data }}" | tail -n +2)
+        do
           num="$(echo $row | cut -d, -f1)"
           add="$(echo $row | cut -d, -f3)"
           del="$(echo $row | cut -d, -f4)"
