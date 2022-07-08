@@ -1,0 +1,57 @@
+name: Merged Yesterday PRs
+decription: Merged Yesterday PRs Summary
+outputs:
+  markdown:
+    description: Summary(markdown)
+    value: ${{ steps.markdown.outputs.data }}
+  csv:
+    description: Summary(csv)
+    value: ${{ steps.rawdata.outputs.data }}
+runs:
+  using: composite
+  steps:
+    - name: Get repository metrics
+      id: rawdata
+      shell: bash
+      run: |
+        mdate=$(date '+%Y-%m-%d' -d '-1 day')
+        owner=$(echo ${{ github.repository }} | awk -F '/' '{print $1}')
+        repos=$(echo ${{ github.repository }} | awk -F '/' '{print $2}')
+        gh extension install hectcastro/gh-metrics
+        data=$(gh metrics --owner "$owner" --repo "$repos" --start "$mdate" --end "$mdate" --only-weekdays --csv)
+        data=${data//$'\n'\\n}
+        echo "::set-output name=data::$data"
+        echo "::set-output name=date::$mdate"
+      env:
+        TZ: Asia/Tokyo
+        GH_TOKEN: ${{ github.token }}
+
+    - name: Create markdown
+      id: markdown
+      shell: bash
+      run: |
+        head=<<EOS
+        | PR | Additions | Deletions | Changed Files | Lead Time | Time To 1st Review | Total Review Time |
+        | -- | --------- | --------- | ------------- | --------- | ------------------ | ----------------- |
+        EOS
+        rows=''
+        echo "${{ steps.rawdata.outputs.data }}" | tail -n +2 | while read row; do
+          num=$(echo "$row" | cut -d, -f1)
+          add=$(echo "$row" | cut -d, -f3)
+          del=$(echo "$row" | cut -d, -f4)
+          changed=$(echo "$row" | cut -d, -f5)
+          leadTime=$(echo "$row" | cut -d, -f9)
+          timeToFirstReiew=$(echo "$row" | cut -d, -f6)
+          reviewTimeTotal=$(echo "$row" | cut -d, -f10)
+          rows="$rows\n| #$num | $add | $del | $changed | $leadTime | $timeToFirstReiew | $reviewTimeTotal | "
+        done
+        echo "::set-output name=data::$head\n$rows"
+
+    - name: Create report
+      shell: bash
+      run:
+        body=$(echo ${{ steps.markdown.outputs.data }})
+        body=${body//$'\n'\\n}
+        gh issue -R ${{ github.repository }} -b "$body" -t "${{ steps.rawdata.outputs.data }}" -l 'daily-report'
+      env:
+        GH_TOKEN: ${{ github.token }}
