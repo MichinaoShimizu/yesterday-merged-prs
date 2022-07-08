@@ -30,11 +30,7 @@ runs:
       id: markdown
       shell: bash
       run: |
-        head=<<EOS
-        | PR | Additions | Deletions | Changed Files | Lead Time | Time To 1st Review | Total Review Time |
-        | -- | --------- | --------- | ------------- | --------- | ------------------ | ----------------- |
-        EOS
-
+        head="| PR | Additions | Deletions | Changed Files | Lead Time | Time To 1st Review | Total Review Time |\n| -- | --------- | --------- | ------------- | --------- | ------------------ | ----------------- |"
         rows=''
         echo "${{ steps.rawdata.outputs.data }}" | tail -n +2 | while read row; do
           num=$(echo "$row" | cut -d, -f1)
