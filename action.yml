@@ -41,7 +41,7 @@ runs:
           leadTime="$(echo $row | cut -d, -f9)"
           timeToFirstReiew="$(echo $row | cut -d, -f6)"
           reviewTimeTotal="$(echo $row | cut -d, -f10)"
-          table="$table\\n| #$num | $leadTime | $timeToFirstReiew | $reviewTimeTotal | $add line | $del line | __$changed__ file |"
+          table="$table\\n| #$num | $leadTime | $timeToFirstReiew | $reviewTimeTotal | $add line | $del line | $changed file |"
         done
         echo "$table"
         table="${table//'%'/'%25'}"
