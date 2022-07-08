@@ -44,7 +44,7 @@ runs:
           rows="${rows}\n| $num | $add | $del | $changed | $leadTime | $timeToFirstReiew | $reviewTimeTotal |"
         done
         table="${header}${rows}"
-        table="${table//$'\n'/'%0A'}"
+        table="${table//$'\n'/\\n}"
         echo "::set-output name=table::$table"
 
     - name: Create report
