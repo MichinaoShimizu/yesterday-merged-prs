@@ -1,0 +1,17 @@
+name: Daily Reporting
+
+on:
+  schedule:
+    cron: '0 2 * * 2-6'
+
+  workflow_dispatch:
+
+jobs:
+  yesterday-merged:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Create Yesterday Merged PRs ISSUE
+        uses: MichinaoShimizu/yesterday-merged-prs
+        with:
+          label: hogehoge

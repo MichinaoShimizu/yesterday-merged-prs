@@ -3,8 +3,8 @@ decription: Yesterday Mereged PRs to ISSUE.
 inputs:
   label:
     description: Label attached to ISSUE
-    required: true
-    default: daily-report
+    required: false
+    default: report
 
 outputs:
   markdown:
