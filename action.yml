@@ -43,7 +43,8 @@ runs:
           reviewTimeTotal="$(echo $row | cut -d, -f10)"
           rows="$rows\n| $num | $add | $del | $changed | $leadTime | $timeToFirstReiew | $reviewTimeTotal |"
         done
-        data="${$header$rows//$'\n'/'%0A'}"
+        data="$header$rows"
+        data="${data//$'\n'/'%0A'}"
         echo "::set-output name=data::$data"
 
     - name: Create report
