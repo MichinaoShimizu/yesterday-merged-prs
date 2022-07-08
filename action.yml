@@ -42,8 +42,9 @@ runs:
           timeToFirstReiew="$(echo $row | cut -d, -f6)"
           reviewTimeTotal="$(echo $row | cut -d, -f10)"
           rows="$rows\n| $num | $add | $del | $changed | $leadTime | $timeToFirstReiew | $reviewTimeTotal |"
+          echo "$rows"
         done
-        data="$header$rows"
+        data=$header$rows
         data="${data//$'\n'/'%0A'}"
         echo "::set-output name=data::$data"
 
