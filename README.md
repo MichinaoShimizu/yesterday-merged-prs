@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Create Yesterday Merged PRs ISSUE
-        uses: MichinaoShimizu/yesterday-merged-prs@v1.0.0
+        uses: MichinaoShimizu/yesterday-merged-prs@main
         with:
           label: hogehoge
 ```
