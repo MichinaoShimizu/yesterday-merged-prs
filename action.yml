@@ -35,8 +35,10 @@ runs:
         | PR | Additions | Deletions | Changed Files | Lead Time | Time To 1st Review | Total Review Time |
         | -- | --------- | --------- | ------------- | --------- | ------------------ | ----------------- |
         EOS
+
         rows=''
-        echo "${{ steps.rawdata.outputs.data }}" | tail -n +2 | while read row; do
+
+        echo "$(echo ${{ steps.rawdata.outputs.data }})" | tail -n +2 | while read row; do
           num=$(echo "$row" | cut -d, -f1)
           add=$(echo "$row" | cut -d, -f3)
           del=$(echo "$row" | cut -d, -f4)
@@ -46,6 +48,7 @@ runs:
           reviewTimeTotal=$(echo "$row" | cut -d, -f10)
           rows="$rows\n| #$num | $add | $del | $changed | $leadTime | $timeToFirstReiew | $reviewTimeTotal | "
         done
+
         data="$head\n$rows"
         echo "::set-output name=data::$data"
 
