@@ -19,7 +19,7 @@ runs:
         repos=$(echo ${{ github.repository }} | awk -F '/' '{print $2}')
         gh extension install hectcastro/gh-metrics
         data="$(gh metrics --owner "$owner" --repo "$repos" --start "$mdate" --end "$mdate" --only-weekdays --csv)"
-        data="${data//$'\n'\\n}"
+        data="${data//$'\n'/'%0A'}"
         echo "::set-output name=data::$data"
         echo "::set-output name=mdate::$mdate"
       env:
@@ -51,6 +51,7 @@ runs:
         done
 
         data="$head\n$rows"
+        data=${data//$'\n'/'%0A'}
         echo "::set-output name=data::$data"
 
     - name: Create report
