@@ -5,7 +5,7 @@ Github Actions that reports all Pull Requests merged yesterday with indicators.
 ## Usage
 
 ```yaml
-name: Daily Reporting
+name: Yesterday Mereged PRs
 
 on:
   schedule:
@@ -14,8 +14,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  report-yesterday-merged-prs:
+  reporting:
     runs-on: ubuntu-latest
+    timeout-minutes: 3
     steps:
       - uses: actions/checkout@v3
       - uses: MichinaoShimizu/yesterday-merged-prs@main
