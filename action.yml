@@ -39,7 +39,7 @@ runs:
 
         rows=''
 
-        echo "$(echo ${{ steps.rawdata.outputs.data }})" | tail -n +2 | while read row; do
+        echo "${{ steps.rawdata.outputs.data }}" | tail -n +2 | while read row; do
           num=$(echo "$row" | cut -d, -f1)
           add=$(echo "$row" | cut -d, -f3)
           del=$(echo "$row" | cut -d, -f4)
