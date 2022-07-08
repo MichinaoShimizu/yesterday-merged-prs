@@ -38,8 +38,7 @@ runs:
         EOS
 
         rows=''
-
-        echo "${{ steps.rawdata.outputs.data }}" | tail -n +2 | while read row; do
+        while read row; do
           num=$(echo "$row" | cut -d, -f1)
           add=$(echo "$row" | cut -d, -f3)
           del=$(echo "$row" | cut -d, -f4)
@@ -48,7 +47,7 @@ runs:
           timeToFirstReiew=$(echo "$row" | cut -d, -f6)
           reviewTimeTotal=$(echo "$row" | cut -d, -f10)
           rows="$rows\n| #$num | $add | $del | $changed | $leadTime | $timeToFirstReiew | $reviewTimeTotal | "
-        done
+        done < $(echo "${{ steps.rawdata.outputs.data }}" | tail -n +2)
 
         data="$head\n$rows"
         data=${data//$'\n'/'%0A'}
