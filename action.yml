@@ -31,7 +31,7 @@ runs:
       shell: bash
       run: |
         table="| PR | LeadTime | TimeTo1stReview | TotalReviewTime | Additions | Deletions  | "
-        table="$table\\n| -- |: ---------  :|: ------------- : |: --------- :| ------------------ | ----------------- |"
+        table="$table\\n| -- |: ---------  :|: ------------- :|: --------- :| ------------------ | ----------------- |"
         IFS=$'\n';
         for row in $(echo "${{ steps.rawdata.outputs.data }}" | tail -n +2)
         do
