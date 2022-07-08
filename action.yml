@@ -47,7 +47,7 @@ runs:
           rows=$rows'\n'"| #$num | $add | $del | $changed | $leadTime | $timeToFirstReiew | $reviewTimeTotal |"
         done
 
-        data=$head'\n'$rows
+        data="$head\n$rows"
         data=${data//$'\n'/'%0A'}
         echo "::set-output name=data::$data"
 
