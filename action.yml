@@ -30,8 +30,8 @@ runs:
       id: markdown
       shell: bash
       run: |
-        head="| PR | Additions | Deletions | Changed Files | Lead Time | Time To 1st Review | Total Review Time |\n| -- | --------- | --------- | ------------- | --------- | ------------------ | ----------------- |"
-        rows=''
+        data="| PR | Additions | Deletions | Changed Files | Lead Time | Time To 1st Review | Total Review Time |"
+        data="$data\n| -- | --------- | --------- | ------------- | --------- | ------------------ | ----------------- |"
         echo "${{ steps.rawdata.outputs.data }}" | tail -n +2 | while read row; do
           num=$(echo "$row" | cut -d, -f1)
           add=$(echo "$row" | cut -d, -f3)
@@ -40,10 +40,8 @@ runs:
           leadTime=$(echo "$row" | cut -d, -f9)
           timeToFirstReiew=$(echo "$row" | cut -d, -f6)
           reviewTimeTotal=$(echo "$row" | cut -d, -f10)
-          rows="$rows\n| #$num | $add | $del | $changed | $leadTime | $timeToFirstReiew | $reviewTimeTotal |"
+          data="$data\n| #$num | $add | $del | $changed | $leadTime | $timeToFirstReiew | $reviewTimeTotal |"
         done
-
-        data="$head$rows"
         data="${data//$'\n'/'%0A'}"
         echo "::set-output name=data::$data"
 
