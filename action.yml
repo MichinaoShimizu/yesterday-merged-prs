@@ -31,7 +31,7 @@ runs:
       shell: bash
       run: |
         header="| PR | Additions | Deletions | Changed Files | Lead Time | Time To 1st Review | Total Review Time |"
-        header="$header"\n'| -- | --------- | --------- | ------------- | --------- | ------------------ | ----------------- |'
+        header="$header\\n| -- | --------- | --------- | ------------- | --------- | ------------------ | ----------------- |"
         rows=''
         echo "${{ steps.rawdata.outputs.data }}" | tail -n +2 | while read row; do
           num="$(echo $row | cut -d, -f1)"
@@ -41,7 +41,7 @@ runs:
           leadTime="$(echo $row | cut -d, -f9)"
           timeToFirstReiew="$(echo $row | cut -d, -f6)"
           reviewTimeTotal="$(echo $row | cut -d, -f10)"
-          rows="${rows}"\n"| $num | $add | $del | $changed | $leadTime | $timeToFirstReiew | $reviewTimeTotal |"
+          rows="${rows}\\n| $num | $add | $del | $changed | $leadTime | $timeToFirstReiew | $reviewTimeTotal |"
         done
         table="${header}${rows}"
         table="${table//$'\n'/\\n}"
