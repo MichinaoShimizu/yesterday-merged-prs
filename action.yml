@@ -43,7 +43,10 @@ runs:
           table="$table\\n| $num | $add | $del | $changed | $leadTime | $timeToFirstReiew | $reviewTimeTotal |"
           echo "$table"
         done
-        table="${table//$'\n'/\\n}"
+        # table="${table//$'\n'/\\n}"
+        table="${table//'%'/'%25'}"
+        table="${table//$'\n'/'%0A'}"
+        table="${table//$'\r'/'%0D'}"
         echo "::set-output name=table::$table"
 
     - name: Create report
