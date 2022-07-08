@@ -1,5 +1,11 @@
-name: Merged Yesterday PRs
-decription: Merged Yesterday PRs Summary
+name: Yesterday Mereged PRs
+decription: Yesterday Mereged PRs to ISSUE.
+inputs:
+  label:
+    description: Label attached to ISSUE
+    required: true
+    default: daily-report
+
 outputs:
   markdown:
     description: Summary(markdown)
@@ -7,6 +13,7 @@ outputs:
   csv:
     description: Summary(csv)
     value: ${{ steps.rawdata.outputs.data }}
+
 runs:
   using: composite
   steps:
@@ -52,6 +59,6 @@ runs:
       run:
         body=$(echo ${{ steps.markdown.outputs.data }})
         body=${body//$'\n'\\n}
-        gh issue -R ${{ github.repository }} -b "$body" -t "${{ steps.rawdata.outputs.data }}" -l 'daily-report'
+        gh issue -R ${{ github.repository }} -b "$body" -t "${{ steps.rawdata.outputs.data }}" -l "${{ inputs.label }}"
       env:
         GH_TOKEN: ${{ github.token }}
