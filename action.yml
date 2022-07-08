@@ -59,6 +59,6 @@ runs:
       run:
         body=$(echo ${{ steps.markdown.outputs.data }})
         body=${body//$'\n'\\n}
-        gh issue create -R ${{ github.repository }} -b "$body" -t "${{ steps.rawdata.outputs.data }}" -l "${{ inputs.label }}"
+        gh issue create -R ${{ github.repository }} --body $body -t "${{ steps.rawdata.outputs.data }}" -l "${{ inputs.label }}"
       env:
         GH_TOKEN: ${{ github.token }}
