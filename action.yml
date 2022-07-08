@@ -29,7 +29,7 @@ runs:
         data=${data//$'\n'\\n}
         echo $data
         echo "::set-output name=data::$data"
-        echo "::set-output name=date::$mdate"
+        echo "::set-output name=mdate::$mdate"
       env:
         TZ: Asia/Tokyo
         GH_TOKEN: ${{ github.token }}
@@ -60,8 +60,8 @@ runs:
       shell: bash
       run:
         body=$(echo ${{ steps.markdown.outputs.data }})
-        echo $body
-        body=${body//$'\n'\\n}
-        gh issue create -R ${{ github.repository }} --body $body -t "${{ steps.rawdata.outputs.data }}" -l "${{ inputs.label }}"
+        body="${body//$'\n'/'%0A'}"
+        title="Yesterday(${{ steps.rawdata.outputs.mdate }} Merged PRs)"
+        gh issue create -R "${{ github.repository }}" --body "$body" -t "$title" -l "${{ inputs.label }}"
       env:
         GH_TOKEN: ${{ github.token }}
