@@ -1,4 +1,4 @@
-name: Daily Reporting
+name: Yesterday Mereged PRs
 
 on:
   schedule:
@@ -7,10 +7,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  yesterday-merged-prs:
+  reporting:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 3
     steps:
       - uses: actions/checkout@v3
-      - name: Create Yesterday Merged PRs ISSUE
-        uses: MichinaoShimizu/yesterday-merged-prs@main
+      - uses: MichinaoShimizu/yesterday-merged-prs@main
