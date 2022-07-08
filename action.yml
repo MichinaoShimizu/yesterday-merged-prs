@@ -46,7 +46,8 @@ runs:
           reviewTimeTotal=$(echo "$row" | cut -d, -f10)
           rows="$rows\n| #$num | $add | $del | $changed | $leadTime | $timeToFirstReiew | $reviewTimeTotal | "
         done
-        echo "::set-output name=data::$head\n$rows"
+        data="$head\n$rows"
+        echo "::set-output name=data::$data"
 
     - name: Create report
       shell: bash
