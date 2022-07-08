@@ -18,6 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
+      - uses: actions/checkout@v3
       - name: Create Yesterday Merged PRs ISSUE
         uses: MichinaoShimizu/yesterday-merged-prs@v1.0.0
         with:
