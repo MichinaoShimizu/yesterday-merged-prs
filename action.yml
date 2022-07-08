@@ -27,6 +27,7 @@ runs:
         gh extension install hectcastro/gh-metrics
         data=$(gh metrics --owner "$owner" --repo "$repos" --start "$mdate" --end "$mdate" --only-weekdays --csv)
         data=${data//$'\n'\\n}
+        echo $data
         echo "::set-output name=data::$data"
         echo "::set-output name=date::$mdate"
       env:
@@ -52,12 +53,14 @@ runs:
           reviewTimeTotal=$(echo "$row" | cut -d, -f10)
           rows="$rows\n| #$num | $add | $del | $changed | $leadTime | $timeToFirstReiew | $reviewTimeTotal | "
         done
-        echo "::set-output name=data::$head\n$rows"
+        data="$head\n$rows"
+        echo "::set-output name=data::$data"
 
     - name: Create report
       shell: bash
       run:
         body=$(echo ${{ steps.markdown.outputs.data }})
+        echo $body
         body=${body//$'\n'\\n}
         gh issue create -R ${{ github.repository }} --body $body -t "${{ steps.rawdata.outputs.data }}" -l "${{ inputs.label }}"
       env:
