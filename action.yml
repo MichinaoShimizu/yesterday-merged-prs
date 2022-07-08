@@ -48,7 +48,7 @@ runs:
         done
 
         data="$head\n$rows"
-        data="${data//$'\n'/'%0A'}"
+        # data="${data//$'\n'/'%0A'}"
         echo "::set-output name=data::$data"
 
     - name: Create report
