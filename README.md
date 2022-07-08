@@ -19,7 +19,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Create Yesterday Merged PRs ISSUE
-        uses: MichinaoShimizu/yesterday-merged-prs
+        uses: MichinaoShimizu/yesterday-merged-prs@v1.0.0
         with:
           label: hogehoge
 ```
