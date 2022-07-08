@@ -9,7 +9,7 @@ name: Daily Reporting
 
 on:
   schedule:
-    cron: '0 2 * * 2-6'
+    - cron: '0 2 * * 2-6'
 
   workflow_dispatch:
 
