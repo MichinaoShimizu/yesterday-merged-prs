@@ -1,6 +1,5 @@
 name: Yesterday Mereged PRs
 decription: Yesterday Mereged PRs to ISSUE.
-
 outputs:
   csv:
     description: Summary(csv)

@@ -14,13 +14,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  yesterday-merged:
+  report-yesterday-merged-prs:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v3
-      - name: Create Yesterday Merged PRs ISSUE
-        uses: MichinaoShimizu/yesterday-merged-prs@main
+      - uses: MichinaoShimizu/yesterday-merged-prs@main
 ```
 
 ## Input
