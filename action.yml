@@ -16,7 +16,8 @@ runs:
       id: rawdata
       shell: bash
       run: |
-        mdate=$(date '+%Y-%m-%d' -d '-1 day')
+        # mdate=$(date '+%Y-%m-%d' -d '-1 day')
+        # mdate=$(date '+%Y-%m-%d')
         owner=$(echo ${{ github.repository }} | awk -F '/' '{print $1}')
         repos=$(echo ${{ github.repository }} | awk -F '/' '{print $2}')
         gh extension install hectcastro/gh-metrics
