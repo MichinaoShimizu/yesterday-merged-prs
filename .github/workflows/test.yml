@@ -15,6 +15,6 @@ jobs:
 
       - name: Create Yesterday Merged PRs ISSUE
         # uses: MichinaoShimizu/yesterday-merged-prs@v1.0.1
-        uses: ./action.yml
+        uses: ./.github/../action.yml
         with:
           label: hogehoge
