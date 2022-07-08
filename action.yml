@@ -21,7 +21,7 @@ runs:
         owner=$(echo ${{ github.repository }} | awk -F '/' '{print $1}')
         repos=$(echo ${{ github.repository }} | awk -F '/' '{print $2}')
         gh extension install hectcastro/gh-metrics
-        data=$(gh metrics --owner "$owner" --repo "$repos" --start "$mdate" --end "$mdate" --only-weekdays --csv)
+        data="$(gh metrics --owner "$owner" --repo "$repos" --start "$mdate" --end "$mdate" --only-weekdays --csv)"
         echo "::set-output name=data::${data//$'\n'\\n}"
         echo "::set-output name=mdate::$mdate"
       env:
