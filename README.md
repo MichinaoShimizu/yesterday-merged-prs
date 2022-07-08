@@ -21,16 +21,12 @@ jobs:
       - uses: actions/checkout@v3
       - name: Create Yesterday Merged PRs ISSUE
         uses: MichinaoShimizu/yesterday-merged-prs@main
-        with:
-          label: hogehoge
 ```
 
 ## Input
 
-| key   | description             | required | default |
-| ----- | ----------------------- | -------- | ------- |
-| label | Label attached to ISSUE | false    | report  |
+N/A
 
 ## Output
 
-TBD
+N/A
