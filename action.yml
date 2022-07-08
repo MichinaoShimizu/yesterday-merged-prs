@@ -30,19 +30,20 @@ runs:
       id: markdown
       shell: bash
       run: |
-        data="| PR | Additions | Deletions | Changed Files | Lead Time | Time To 1st Review | Total Review Time |"
-        data="$data\n| -- | --------- | --------- | ------------- | --------- | ------------------ | ----------------- |"
+        header="| PR | Additions | Deletions | Changed Files | Lead Time | Time To 1st Review | Total Review Time |"
+        header="$header\n| -- | --------- | --------- | ------------- | --------- | ------------------ | ----------------- |"
+        rows=''
         echo "${{ steps.rawdata.outputs.data }}" | tail -n +2 | while read row; do
-          num=$(echo "$row" | cut -d, -f1)
-          add=$(echo "$row" | cut -d, -f3)
-          del=$(echo "$row" | cut -d, -f4)
-          changed=$(echo "$row" | cut -d, -f5)
-          leadTime=$(echo "$row" | cut -d, -f9)
-          timeToFirstReiew=$(echo "$row" | cut -d, -f6)
-          reviewTimeTotal=$(echo "$row" | cut -d, -f10)
-          data="$data\n| $num | $add | $del | $changed | $leadTime | $timeToFirstReiew | $reviewTimeTotal |"
+          num="$(echo $row | cut -d, -f1)"
+          add="$(echo $row | cut -d, -f3)"
+          del="$(echo $row | cut -d, -f4)"
+          changed="$(echo $row | cut -d, -f5)"
+          leadTime="$(echo $row | cut -d, -f9)"
+          timeToFirstReiew="$(echo $row | cut -d, -f6)"
+          reviewTimeTotal="$(echo $row | cut -d, -f10)"
+          rows="$rows\n| $num | $add | $del | $changed | $leadTime | $timeToFirstReiew | $reviewTimeTotal |"
         done
-        data="${data//$'\n'/'%0A'}"
+        data="${$header$rows//$'\n'/'%0A'}"
         echo "::set-output name=data::$data"
 
     - name: Create report
