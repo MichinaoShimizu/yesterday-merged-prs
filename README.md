@@ -15,7 +15,7 @@ name: Yesterday Mereged PRs
 
 on:
   schedule:
-    - cron: '0 1 * * 2-5'
+    - cron: '0 1 * * 2-6'
 
   workflow_dispatch:
 
