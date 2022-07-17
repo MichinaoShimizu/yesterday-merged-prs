@@ -4,13 +4,14 @@ Github Actions that reports all Pull Requests merged yesterday with indicators.
 
 ## Usage
 
+## Example
+
 ```yaml
 name: Yesterday Mereged PRs
 
 on:
-  # 毎週火曜〜土曜の11時に前日（月曜〜金曜）にマージされたPRを収集
   schedule:
-    - cron: '0 2 * * 2-6'
+    - cron: '0 1 * * 2-5'
 
   workflow_dispatch:
 
@@ -22,11 +23,3 @@ jobs:
       - uses: actions/checkout@v3
       - uses: MichinaoShimizu/yesterday-merged-prs@v1
 ```
-
-## Input
-
-N/A
-
-## Output
-
-N/A
