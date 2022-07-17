@@ -4,6 +4,10 @@ Github Actions that reports all Pull Requests merged yesterday with indicators.
 
 ## Usage
 
+```yaml
+uses: MichinaoShimizu/yesterday-merged-prs@v1
+```
+
 ## Example
 
 ```yaml
