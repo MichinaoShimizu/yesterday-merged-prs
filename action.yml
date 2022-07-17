@@ -1,9 +1,5 @@
 name: Yesterday Mereged PRs
 decription: Yesterday Mereged PRs to ISSUE.
-outputs:
-  csv:
-    description: Summary(csv)
-    value: ${{ steps.rawdata.outputs.data }}
 
 runs:
   using: composite
@@ -12,8 +8,7 @@ runs:
       id: rawdata
       shell: bash
       run: |
-        # mdate=$(date '+%Y-%m-%d' -d '-1 day')
-        mdate=$(date '+%Y-%m-%d')
+        mdate=$(date '+%Y-%m-%d' -d '-1 day')
         owner=$(echo ${{ github.repository }} | awk -F '/' '{print $1}')
         repos=$(echo ${{ github.repository }} | awk -F '/' '{print $2}')
         gh extension install hectcastro/gh-metrics
@@ -48,6 +43,10 @@ runs:
         table="${table//$'\n'/'%0A'}"
         table="${table//$'\r'/'%0D'}"
         echo "::set-output name=table::$table"
+
+    - name: Write job summary
+      shell: bash
+      run: echo -e "${{ steps.markdown.outputs.table }}" >> $GITHUB_STEP_SUMMARY
 
     - name: Create report
       shell: bash
