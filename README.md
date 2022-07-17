@@ -14,10 +14,7 @@ uses: MichinaoShimizu/yesterday-merged-prs@v1
 name: Yesterday Mereged PRs
 
 on:
-  schedule:
-    - cron: '0 1 * * 2-6'
-
-  workflow_dispatch:
+  workflow_dispatch: {}
 
 jobs:
   reporting:
